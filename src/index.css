@@ -67,3 +67,21 @@ body {
 .todo-tasks-empty {
   margin-top: 20px;
 }
+
+.todo-item-status {
+  width: 100px;
+  padding: 6px 10px;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.todo-item-status-backlog {
+  background-color: #cccc;
+}
+
+.todo-item-status-completed {
+  background-color: #01b101;
+}
