@@ -24,6 +24,8 @@ export default defineConfig([
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      "prettier/prettier": "error",
+      "@typescript-eslint/no-unused-vars": "warn"
     },
   },
 ])

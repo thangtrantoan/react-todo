@@ -16,7 +16,7 @@ function App() {
   const handleCreateTask = (e) => {
     const data = {
       id: generateShortId(),
-      type: "abc",
+      status: "backlog", // completed
       name: newTask,
       timeCreate: Date.now(),
     };
@@ -31,6 +31,18 @@ function App() {
     setTasks(data);
   };
 
+  const handleChangeStatus = (id) => {
+    const updated = tasks.map((task) =>
+      task.id === id
+        ? {
+            ...task,
+            status: task.status === "completed" ? "backlog" : "completed",
+          }
+        : task
+    );
+    setTasks(updated);
+  };
+
   return (
     <div className="todo-container">
       <div>
@@ -43,20 +55,66 @@ function App() {
         />
       </div>
       <div className="todo-tasks">
-        {tasks.length > 0 ? (
-          tasks.map((task) => (
-            <div key={task.id} className="todo-item">
-              <div className="todo-item-name">{task.name}</div>
-              <button
-                className="todo-item-button"
-                onClick={() => handleDeleteTask(task.id)}
-              >
-                x
-              </button>
-            </div>
-          ))
+        {/* Backlog Tasks */}
+        <h3>Backlog</h3>
+        {tasks.filter((t) => t.status === "backlog").length > 0 ? (
+          tasks
+            .filter((t) => t.status === "backlog")
+            .map((task) => (
+              <div key={task.id} className="todo-item">
+                <div className="todo-item-name">{task.name}</div>
+                {/* <button
+                  className={
+                    task.status === "completed"
+                      ? "todo-item-status todo-item-status-completed"
+                      : "todo-item-status todo-item-status-backlog"
+                  }
+                  onClick={() => handleChangeStatus(task.id)}
+                >
+                  Mark as Done
+                </button> */}
+                <input type="checkbox" checked={task.status === "completed"} onChange={() => handleChangeStatus(task.id)} />
+                <button
+                  className="todo-item-button"
+                  onClick={() => handleDeleteTask(task.id)}
+                >
+                  x
+                </button>
+              </div>
+            ))
         ) : (
-          <div className="todo-tasks-empty">No data</div>
+          <div className="todo-tasks-empty">No backlog tasks</div>
+        )}
+
+        {/* Completed Tasks */}
+        <h3>Completed</h3>
+        {tasks.filter((t) => t.status === "completed").length > 0 ? (
+          tasks
+            .filter((t) => t.status === "completed")
+            .map((task) => (
+              <div key={task.id} className="todo-item">
+                <div className="todo-item-name">{task.name}</div>
+                {/* <button
+                  className={
+                    task.status === "completed"
+                      ? "todo-item-status todo-item-status-completed"
+                      : "todo-item-status todo-item-status-backlog"
+                  }
+                  onClick={() => handleChangeStatus(task.id)}
+                >
+                  {task.status}
+                </button> */}
+                <input type="checkbox" checked={task.status === "completed"} onChange={() => handleChangeStatus(task.id)} />
+                <button
+                  className="todo-item-button"
+                  onClick={() => handleDeleteTask(task.id)}
+                >
+                  x
+                </button>
+              </div>
+            ))
+        ) : (
+          <div className="todo-tasks-empty">No completed tasks</div>
         )}
       </div>
     </div>
