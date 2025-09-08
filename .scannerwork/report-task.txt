@@ -1,0 +1,7 @@
+organization=thangtrantoan
+projectKey=thangtrantoan_react-todo
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.66951
+dashboardUrl=https://sonarcloud.io/dashboard?id=thangtrantoan_react-todo
+ceTaskId=AZkosUZYOcLZUPbeojeq
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZkosUZYOcLZUPbeojeq
