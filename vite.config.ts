@@ -10,6 +10,7 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'lcov'], // <-- lcov for Sonar
       reportsDirectory: './coverage',
+      include: ['src/**/*.{js,jsx,ts,tsx}'],
     },
   },
   resolve: {

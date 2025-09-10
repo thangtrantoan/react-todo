@@ -3,5 +3,5 @@ projectKey=thangtrantoan_react-todo
 serverUrl=https://sonarcloud.io
 serverVersion=8.0.0.67039
 dashboardUrl=https://sonarcloud.io/dashboard?id=thangtrantoan_react-todo
-ceTaskId=AZkyuLj9JCRBR2N9WG3D
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZkyuLj9JCRBR2N9WG3D
+ceTaskId=AZkyv6nSJCRBR2N9WHN3
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZkyv6nSJCRBR2N9WHN3
