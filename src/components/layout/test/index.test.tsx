@@ -1,13 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MainLayout from '../index';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import '@testing-library/jest-dom';
 
 // Mock Outlet so it doesn’t try to render real routes
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  Outlet: () => <div data-testid="mock-outlet">Mock Outlet</div>,
-}));
+vi.mock('react-router-dom', async () => {
+  const actual = await import('react-router-dom');
+  return {
+    ...actual,
+    Outlet: () => <div data-testid="mock-outlet">Mock Outlet</div>,
+  };
+});
 
 describe('MainLayout', () => {
   it('renders sidebar with menu items', () => {
