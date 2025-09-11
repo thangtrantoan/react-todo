@@ -1,50 +1,57 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MainLayout from '../index';
-import { describe, expect, it } from 'vitest';
+import { it, expect } from 'vitest';
+import '@testing-library/jest-dom';
 
-// Mock Outlet so it doesn’t try to render real routes
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  Outlet: () => <div data-testid="mock-outlet">Mock Outlet</div>,
-}));
+it('renders submenu items under WORKFLOW when expanded', async () => {
+  render(
+    <MemoryRouter>
+      <MainLayout />
+    </MemoryRouter>,
+  );
+  const workflowMenu = screen.getByText('WORKFLOW');
+  fireEvent.click(workflowMenu);
+  expect(await screen.findByText('Common')).toBeInTheDocument();
+  expect(screen.getByText('Practice')).toBeInTheDocument();
+  expect(screen.getByText('Project')).toBeInTheDocument();
+});
 
-describe('MainLayout', () => {
-  it('renders sidebar with menu items', () => {
-    render(
-      <MemoryRouter>
-        <MainLayout />
-      </MemoryRouter>,
-    );
+it('has CORE & FUNDAMENTALS as default selected menu item', () => {
+  render(
+    <MemoryRouter>
+      <MainLayout />
+    </MemoryRouter>,
+  );
+  const coreMenu = screen.getByText('CORE & FUNDAMENTALS');
+  expect(coreMenu.closest('.ant-menu-item-selected')).toBeTruthy();
+});
 
-    // Check menu labels
-    expect(screen.getByText('CORE & FUNDAMENTALS')).toBeInTheDocument();
-    expect(screen.getByText('LOGIC')).toBeInTheDocument();
-    expect(screen.getByText('WORKFLOW')).toBeInTheDocument();
-  });
+it('sidebar has width 300px', () => {
+  render(
+    <MemoryRouter>
+      <MainLayout />
+    </MemoryRouter>,
+  );
+  const sider = document.querySelector('.ant-layout-sider');
+  expect(sider).toHaveStyle({ width: '300px' });
+});
 
-  it('collapses sidebar when toggle clicked', () => {
-    render(
-      <MemoryRouter>
-        <MainLayout />
-      </MemoryRouter>,
-    );
+it('renders logo div in sidebar', () => {
+  const { container } = render(
+    <MemoryRouter>
+      <MainLayout />
+    </MemoryRouter>,
+  );
+  expect(container.querySelector('.demo-logo-vertical')).toBeInTheDocument();
+});
 
-    // Sider collapse button has role="button"
-    const toggleBtn = screen.getByRole('button');
-    fireEvent.click(toggleBtn);
-
-    // The sider should now have collapsed class
-    expect(toggleBtn.closest('.ant-layout-sider-collapsed')).toBeTruthy();
-  });
-
-  it('renders outlet content', () => {
-    render(
-      <MemoryRouter>
-        <MainLayout />
-      </MemoryRouter>,
-    );
-
-    expect(screen.getByTestId('mock-outlet')).toBeInTheDocument();
-  });
+it('renders header and content areas', () => {
+  render(
+    <MemoryRouter>
+      <MainLayout />
+    </MemoryRouter>,
+  );
+  expect(document.querySelector('.ant-layout-header')).toBeInTheDocument();
+  expect(document.querySelector('.main-layout-content')).toBeInTheDocument();
 });
